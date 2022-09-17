@@ -1,0 +1,32 @@
+[package]
+name = "abc163"
+version = "0.1.0"
+edition = "2021"
+
+# dependencies added to new project
+[dependencies]
+proconio = "*"
+
+[profile.release]
+lto = true
+panic = 'abort'
+
+[[bin]]
+name = "a"
+path = "src/bin/a.rs"
+
+[[bin]]
+name = "b"
+path = "src/bin/b.rs"
+
+[[bin]]
+name = "c"
+path = "src/bin/c.rs"
+
+[[bin]]
+name = "d"
+path = "src/bin/d.rs"
+
+[[bin]]
+name = "e"
+path = "src/bin/e.rs"
