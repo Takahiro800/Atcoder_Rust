@@ -29,6 +29,5 @@ fn main() {
         println!("Yes");
         return;
     }
-
-    println!("No");
+    print!("{}", ans)
 }

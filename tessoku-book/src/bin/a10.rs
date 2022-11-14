@@ -27,4 +27,5 @@ fn main() {
 
         println!("{}", cmp::max(left_max, right_max));
     }
+    print!("{}", ans)
 }

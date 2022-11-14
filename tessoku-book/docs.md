@@ -85,3 +85,5 @@ use std::collections::VecDeque;
 
 let mut C: VecDeque<usize> = VecDeque::from(A);
 ```
+### 参考記事
+[Rustで競技プログラミングを始めた人のためのデータ構造紹介とノウハウ書き留め](https://zenn.dev/tai_calg/articles/ecbd269503dd61#%E4%BA%8C%E5%88%86%E6%8E%A2%E7%B4%A2%EF%BC%9B%E3%82%88%E3%81%8F%E4%BD%BF%E3%81%86%E3%81%AE%E3%81%AFbtreeset)
