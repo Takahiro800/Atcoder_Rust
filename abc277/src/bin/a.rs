@@ -8,9 +8,8 @@ fn main() {
         P: [usize; N]
     };
 
-    // for i in (0..N) {
-    for (i, _) in P.iter().enumerate() {
-        if P[i] == X {
+    for (i, p) in P.iter().enumerate() {
+        if *p == X {
             println!("{}", i + 1);
             return;
         }
