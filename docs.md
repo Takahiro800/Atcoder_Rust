@@ -24,3 +24,6 @@ println!("{:#?}", uf);
 ```rust
 array.iter().position(|a| *a == b'#').unwrap();
 ```
+
+# 文字列の操作
+   [Rustで文字列の先頭文字や部分文字列を取得する - Qiita](https://qiita.com/HelloRusk/items/7fb68395984958987a54)
