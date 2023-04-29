@@ -13,6 +13,8 @@ fn main() {
     }
 
     let exchange_num = (k - a + 1) / 2;
+
+    // 偶奇が等しいかどうかの判定
     let remark = (k - a + 1) % 2;
 
     let ans = (b - a) * exchange_num + a + remark;
