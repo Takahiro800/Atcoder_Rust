@@ -1,5 +1,9 @@
 use proconio::input;
 
 fn main() {
-    input!{};
+    input! {
+        n: String
+    };
+
+    println!("ABC{}", n);
 }
