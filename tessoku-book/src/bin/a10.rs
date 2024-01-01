@@ -3,10 +3,10 @@ use std::cmp;
 
 fn main() {
     input! {
-      n: usize,
-      a: [usize; n],
-      d: usize,
-      lr: [(usize, usize); d]
+        n: usize,
+        a: [usize; n],
+        d: usize,
+        lr: [(usize, usize); d]
     }
 
     let mut p = vec![0; n + 1];
