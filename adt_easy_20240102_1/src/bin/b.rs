@@ -12,8 +12,8 @@ fn main() {
 fn alphabet_string(k: usize) -> String {
     let alphabet: Vec<char> = (b'A'..=b'Z').map(|c| c as char).collect();
     let mut s = String::new();
-    for i in 0..k {
-        s.push(alphabet[i]);
+    for c in alphabet.iter().take(k) {
+        s.push(*c);
     }
 
     s
