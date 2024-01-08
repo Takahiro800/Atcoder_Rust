@@ -10,23 +10,20 @@ fn main() {
         R: isize,
     };
 
-    let left = L - A;
-    let right = R - A;
+    let max = floor(R - A, M);
+    let min = floor(L - A + M - 1, M);
+    let ans = max - min + 1;
 
-    let l = floor(left - 1, M);
-    let r = floor(right, M);
-
-    let ans = r - l;
     println!("{}", ans)
 }
 
 fn floor(a: isize, b: isize) -> isize {
     let r = (a % b + b) % b;
-    println!("{}", r);
     (a - r) / b
 }
 
 #[test]
 fn test_floor() {
-    assert_eq!(floor(-3, 2), -2)
+    assert_eq!(floor(-3, 2), -2);
+    assert_eq!(floor(-1 - 5 + 3 + 1, 2), -2);
 }
