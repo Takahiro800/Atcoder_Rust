@@ -9,18 +9,18 @@ fn main() {
     };
 
     R.sort_unstable();
-    let mut r = vec![R[0]];
+    let mut accumulation = vec![R[0]];
 
-    for i in 1..R.len() {
-        if let Some(last) = r.last() {
-            let num = last + R[i];
-            r.push(num);
+    for r in R.iter().skip(1) {
+        if let Some(last) = accumulation.last() {
+            let num = last + r;
+            accumulation.push(num);
         }
     }
 
     for _ in 0..Q {
-        input! {q: usize}
-        let ans = binary_search(&r, q);
+        input! { q: usize }
+        let ans = binary_search(&accumulation, q);
         println!("{}", ans + 1)
     }
 }
