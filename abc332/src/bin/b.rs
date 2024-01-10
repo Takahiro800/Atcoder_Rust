@@ -17,8 +17,8 @@ fn main() {
         } else if m == 0 {
             m = M;
         } else {
-            let r = std::cmp::min(m, G);
-            g = r;
+            let r = std::cmp::min(m, G - g);
+            g += r;
             m -= r;
         }
     }
