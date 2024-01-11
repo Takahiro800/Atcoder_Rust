@@ -7,7 +7,6 @@ edition = "2021"
 [dependencies]
 proconio = "*"
 itertools = "*"
-cmp = "*"
 superslice = "*"
 
 [profile.release]
@@ -53,6 +52,10 @@ path = "src/bin/a09.rs"
 [[bin]]
 name = "a12"
 path = "src/bin/a12.rs"
+
+[[bin]]
+name = "a61"
+path = "src/bin/a61.rs"
 
 # B
 [[bin]]

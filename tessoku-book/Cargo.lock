@@ -3,12 +3,6 @@
 version = 3
 
 [[package]]
-name = "cmp"
-version = "0.0.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "884e5d350a9c4cc8ed034354bc343424ea93b10098f2fea5a2ce204ae22e128c"
-
-[[package]]
 name = "either"
 version = "1.8.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -48,7 +42,6 @@ checksum = "ab16ced94dbd8a46c82fd81e3ed9a8727dac2977ea869d217bcc4ea1f122e81f"
 name = "tessoku-book"
 version = "0.1.0"
 dependencies = [
- "cmp",
  "itertools",
  "proconio",
  "superslice",
