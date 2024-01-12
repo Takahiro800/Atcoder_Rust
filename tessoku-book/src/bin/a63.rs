@@ -2,17 +2,17 @@
 use std::collections::VecDeque;
 
 use proconio::input;
-// use proconio::marker::Usize1;
+use proconio::marker::Usize1;
 
 fn main() {
     input! {
-    N: usize,
-    M: usize,
-    AB: [(usize, usize);M]
+        N: usize,
+        M: usize,
+        AB: [(Usize1, Usize1);M],
     }
 
-    let mut glaph: Vec<Vec<usize>> = vec![vec![]; N + 1];
-    let mut ans: Vec<_> = vec![-1; N + 1];
+    let mut glaph: Vec<Vec<usize>> = vec![vec![]; N];
+    let mut ans: Vec<_> = vec![-1; N];
     let mut queue: VecDeque<usize> = VecDeque::new();
 
     for (a, b) in &AB {
@@ -20,8 +20,8 @@ fn main() {
         glaph[*b].push(*a);
     }
 
-    queue.push_back(1);
-    ans[1] = 0;
+    queue.push_back(0);
+    ans[0] = 0;
 
     while !queue.is_empty() {
         let current = queue.pop_front().unwrap();
@@ -34,7 +34,7 @@ fn main() {
         }
     }
 
-    for a in ans.iter().skip(1) {
+    for a in ans.iter() {
         println!("{}", a)
     }
 }
