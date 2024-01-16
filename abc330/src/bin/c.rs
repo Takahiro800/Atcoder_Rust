@@ -7,20 +7,20 @@ use proconio::input;
 
 fn main() {
     input! {
-        D: f64
+        D: usize
     };
 
-    let d = D.sqrt().ceil() as usize;
-    let mut ans = D as usize;
+    let d = (D as f64).sqrt().ceil() as usize;
+    let mut ans = D;
 
     for i in 0..=d {
-        let diff = if (i * i) as f64 >= D {
-            diff(i, 0, D as usize)
+        let diff = if i * i >= D {
+            diff(i, 0, D)
         } else {
-            let f = (D - (i * i) as f64).sqrt().floor() as usize;
-            let c = (D - (i * i) as f64).sqrt().ceil() as usize;
+            let f = ((D - (i * i)) as f64).sqrt().floor() as usize;
+            let c = ((D - (i * i)) as f64).sqrt().ceil() as usize;
 
-            diff(i, f, D as usize).min(diff(i, c, D as usize))
+            diff(i, f, D).min(diff(i, c, D))
         };
 
         if diff < ans {
