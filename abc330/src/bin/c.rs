@@ -1,5 +1,4 @@
 #![allow(non_snake_case)]
-use std::f64;
 
 // use itertools::*;
 use proconio::input;
@@ -10,27 +9,17 @@ fn main() {
         D: usize
     };
 
-    let d = (D as f64).sqrt().ceil() as usize;
-    let mut ans = D;
+    let mut y = 0;
+    let mut ans = !0usize;
 
-    for i in 0..=d {
-        let diff = if i * i >= D {
-            diff(i, 0, D)
-        } else {
-            let f = ((D - (i * i)) as f64).sqrt().floor() as usize;
-            let c = ((D - (i * i)) as f64).sqrt().ceil() as usize;
-
-            diff(i, f, D).min(diff(i, c, D))
-        };
-
-        if diff < ans {
-            ans = diff;
+    for x in (0..=2_000_000).rev() {
+        while x * x + (y + 1) * (y + 1) <= D {
+            y += 1;
         }
+
+        ans = ans.min(D.abs_diff(x * x + y * y));
+        ans = ans.min(D.abs_diff(x * x + (y + 1) * (y + 1)));
     }
 
     println!("{}", ans)
-}
-
-fn diff(x: usize, y: usize, D: usize) -> usize {
-    D.abs_diff(x * x + y * y)
 }
