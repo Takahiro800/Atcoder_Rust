@@ -1,55 +1,33 @@
 #![allow(non_snake_case)]
-use std::{collections::HashMap, usize};
-
 use proconio::input;
+use proconio::marker::*;
 
 fn main() {
     input! {
         _N: usize,
-        S: String
+        S: Bytes,
     };
 
-    let mut hash_map: HashMap<char, usize> = HashMap::new();
-    let mut current: Option<char> = None;
-    let mut count = 0;
+    let z = run_length_encoding(S);
+    let mut count = vec![0; 26];
 
-    for s in S.chars() {
-        match current {
-            Some(c) if c == s => {
-                count += 1;
-            }
-            _ => {
-                if let Some(c) = current {
-                    match hash_map.get(&c) {
-                        Some(value) => {
-                            if count > *value {
-                                hash_map.insert(c, count);
-                            }
-                        }
-                        None => {
-                            hash_map.insert(c, count);
-                        }
-                    };
-                }
-                current = Some(s);
-                count = 1;
-            }
+    for (c, k) in z {
+        let c = (c - b'a') as usize;
+        count[c] = count[c].max(k);
+    }
+
+    let ans = count.iter().sum::<usize>();
+    println!("{}", ans);
+}
+
+fn run_length_encoding<T: Eq>(a: Vec<T>) -> Vec<(T, usize)> {
+    let mut a = a.into_iter().map(|a| (a, 1)).collect::<Vec<_>>();
+    a.dedup_by(|a, b| {
+        a.0 == b.0 && {
+            b.1 += a.1;
+            true
         }
-    }
+    });
 
-    if let Some(c) = current {
-        match hash_map.get(&c) {
-            Some(value) => {
-                if count > *value {
-                    hash_map.insert(c, count);
-                }
-            }
-            None => {
-                hash_map.insert(c, count);
-            }
-        };
-    }
-
-    let ans = hash_map.values().sum::<usize>();
-    println!("{}", ans)
+    a
 }
