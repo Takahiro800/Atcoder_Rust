@@ -36,21 +36,15 @@ fn move_head(record: &mut VecDeque<(i64, i64)>, q: char) {
     record.pop_back();
 
     let head = record.front().unwrap_or(&(0, 0));
-    match q {
-        'R' => {
-            record.push_front((head.0 + 1, head.1));
-        }
-        'L' => {
-            record.push_front((head.0 - 1, head.1));
-        }
-        'U' => {
-            record.push_front((head.0, head.1 + 1));
-        }
-        'D' => {
-            record.push_front((head.0, head.1 - 1));
-        }
+    let d = match q {
+        'R' => (1, 0),
+        'L' => (-1, 0),
+        'U' => (0, 1),
+        'D' => (0, -1),
         _ => unreachable!(),
     };
+
+    record.push_front((head.0 + d.0, head.1 + d.1))
 }
 
 fn print_point(record: &VecDeque<(i64, i64)>, q: usize) {

@@ -9,7 +9,7 @@ fn main() {
     for i in 0..=N {
         for j in 0..=N {
             for k in 0..=N {
-                if i >= 0 && j >= 0 && k >= 0 && i + j + k <= N {
+                if i + j + k <= N {
                     println!("{} {} {}", i, j, k)
                 }
             }

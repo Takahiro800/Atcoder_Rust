@@ -4,5 +4,8 @@ use proconio::input;
 use superslice::*;
 
 fn main() {
-    input!{};
+    input! {
+         N : usize
+    };
+    println!("{}", N.trailing_zeros());
 }

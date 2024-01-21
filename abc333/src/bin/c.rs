@@ -7,18 +7,26 @@ fn main() {
         N: usize
     };
 
-    let L = 12;
+    let mut x = vec![];
+    let mut a = 0usize;
 
-    let r: Vec<usize> = (0..L).map(|i| "1".repeat(i + 1).parse().unwrap()).collect();
-    let mut s: Vec<usize> = vec![];
+    for _ in 0..12 {
+        a *= 10;
+        a += 1;
+        x.push(a);
+    }
 
-    // 同じ値でも良いので (i+1), (j+1)
-    for i in 0..L {
-        for j in 0..(i + 1) {
-            for k in 0..(j + 1) {
-                s.push(r[i] + r[j] + r[k]);
+    let mut res = vec![];
+
+    for &a in &x {
+        for &b in &x {
+            for &c in &x {
+                res.push(a + b + c);
             }
         }
     }
-    println!("{}", s[N - 1])
+    res.sort_unstable();
+    res.dedup();
+
+    println!("{}", res[N - 1])
 }

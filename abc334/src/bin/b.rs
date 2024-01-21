@@ -10,9 +10,9 @@ fn main() {
         R: isize,
     };
 
-    let max = floor(R - A, M);
-    let min = floor(L - A + M - 1, M);
-    let ans = max - min + 1;
+    let r = floor(R - A, M);
+    let l = floor(L - A - 1, M);
+    let ans = r - l;
 
     println!("{}", ans)
 }
