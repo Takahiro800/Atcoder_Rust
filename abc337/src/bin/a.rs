@@ -7,19 +7,17 @@ fn main() {
         XY: [(usize, usize); N]
     };
 
-    let mut sum_x = 0;
-    let mut sum_y = 0;
+    let mut X = 0;
+    let mut Y = 0;
 
     for (x, y) in XY {
-        sum_x += x;
-        sum_y += y;
+        X += x;
+        Y += y;
     }
 
-    if sum_x > sum_y {
-        println!("Takahashi");
-    } else if sum_x < sum_y {
-        println!("Aoki")
-    } else {
-        println!("Draw")
+    match X.cmp(&Y) {
+        std::cmp::Ordering::Greater => println!("Takahashi"),
+        std::cmp::Ordering::Less => println!("Aoki"),
+        std::cmp::Ordering::Equal => println!("Draw"),
     }
 }
