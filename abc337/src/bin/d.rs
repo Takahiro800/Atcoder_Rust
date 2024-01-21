@@ -1,54 +1,57 @@
 #![allow(non_snake_case)]
-use std::collections::{HashMap, VecDeque};
-
-use itertools::*;
 use proconio::input;
-use proconio::marker::Chars;
-use superslice::*;
+use proconio::marker::Bytes;
 
 fn main() {
     input! {
         H: usize,
-        W: usize,
+        _W: usize,
         K: usize,
-        S: [Chars;H]
+        mut S: [Bytes;H]
     };
 
-    let mut current = 0;
-    for s in S {
-        let set = run_length_encoding(s);
-        let mut stack = VecDeque::new();
-        // o, .とする
-        let mut map = [0, 0];
+    let mut ans = std::isize::MAX;
+    for _ in 0..2 {
+        for s in S.iter() {
+            let mut a = vec![0; s.len() + 1];
+            let mut b = vec![0; s.len() + 1];
 
-        for (c, k) in set {
-            match c {
-                'o' => {
-                    stack.push_back((c, k));
-                    map[0] += k;
-                    if map.iter().sum() >= K {
-                        let diff = K - map[0];
-                        if diff <= 0 {
-                            println!("0");
-                            return;
-                        } else {
-                            current = current.min(diff);
-                        }
-                    }
+            for (i, c) in s.iter().enumerate().rev() {
+                a[i] = a[i + 1];
+                b[i] = b[i + 1];
+
+                if *c == b'o' {
+                    a[i] += 1;
+                } else if *c == b'x' {
+                    b[i] += 1;
+                }
+
+                if i + K < a.len() && b[i] == b[i + K] {
+                    ans = ans.min(K as isize - (a[i] - a[i + K]));
                 }
             }
         }
+        S = transpose(S);
     }
+    if ans == std::isize::MAX {
+        ans = -1;
+    }
+    println!("{}", ans);
 }
 
-fn run_length_encoding<T: Eq>(a: Vec<T>) -> Vec<(T, usize)> {
-    let mut a = a.into_iter().map(|a| (a, 1)).collect::<Vec<_>>();
-    a.dedup_by(|a, b| {
-        a.0 == b.0 && {
-            b.1 += a.1;
-            true
-        }
-    });
+fn transpose<T>(a: Vec<Vec<T>>) -> Vec<Vec<T>> {
+    if a.is_empty() {
+        return a;
+    }
 
-    a
+    let h = a.len();
+    let w = a[0].len();
+    assert!(a.iter().all(|v| v.len() == w));
+    let mut ta: Vec<_> = (0..w).map(|_| Vec::with_capacity(h)).collect();
+    for a in a {
+        for (ta, a) in ta.iter_mut().zip(a) {
+            ta.push(a);
+        }
+    }
+    ta
 }
