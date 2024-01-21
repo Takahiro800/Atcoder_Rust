@@ -1,18 +1,16 @@
 #![allow(non_snake_case)]
 use proconio::input;
-use proconio::marker::Chars;
+use proconio::marker::Bytes;
 
 fn main() {
     input! {
         _N: usize,
-        S: Chars
+        S: Bytes
     };
 
-    for i in 0..S.len() - 1 {
-        if (S[i] == 'a' && S[i + 1] == 'b') || (S[i] == 'b' && S[i + 1] == 'a') {
-            println!("Yes");
-            return;
-        }
-    }
-    println!("No")
+    let ans = S
+        .windows(2)
+        .any(|w| (w[0] == b'a' && w[1] == b'b') || (w[0] == b'b' && w[1] == b'a'));
+
+    println!("{}", if ans { "Yes" } else { "No" });
 }
