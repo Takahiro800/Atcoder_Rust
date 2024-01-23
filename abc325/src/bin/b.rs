@@ -7,14 +7,11 @@ fn main() {
         mut WX: [(usize,usize);N]
     };
 
-    const m: usize = 24;
-    let mut cnt = [0; m];
-
+    let mut a = vec![0; 48];
     for (w, x) in WX {
-        for j in 9..18 {
-            cnt[(j + x) % m] += w;
-        }
+        a[x] += w;
+        a[x + 24] += w;
     }
-    let ans = cnt.iter().max().unwrap();
+    let ans = a.windows(9).map(|w| w.iter().sum::<usize>()).max().unwrap();
     println!("{}", ans);
 }
