@@ -1,26 +1,14 @@
 #![allow(non_snake_case)]
 use itertools::*;
-use proconio::{input, marker::Chars};
+use proconio::{input, marker::Bytes};
 
 fn main() {
     input! {
         N: usize,
-        S: [Chars; N]
+        S: [Bytes; N]
     };
 
-    let mut counts: Vec<(usize, usize)> = vec![];
-
-    for (i, s) in S.iter().enumerate() {
-        let count = s.iter().filter(|&c| c == &'o').count();
-        counts.push((i, count))
-    }
-
-    counts.sort_by(|a, b| match a.1.cmp(&b.1) {
-        std::cmp::Ordering::Equal => a.0.cmp(&b.0).reverse(),
-        other => other,
-    });
-    counts.reverse();
-
-    let ans: Vec<usize> = counts.iter().map(|(i, _)| *i + 1).collect();
-    println!("{}", ans.iter().join(" "))
+    let mut ord: Vec<usize> = (0..N).collect();
+    ord.sort_by_cached_key(|i| !S[*i].iter().filter(|c| **c == b'o').count());
+    println!("{}", ord.iter().map(|i| *i + 1).join(" "))
 }
