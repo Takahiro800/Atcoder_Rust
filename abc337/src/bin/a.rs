@@ -7,17 +7,12 @@ fn main() {
         XY: [(usize, usize); N]
     };
 
-    let mut X = 0;
-    let mut Y = 0;
+    let x: usize = XY.iter().map(|(x, _)| x).sum();
+    let y: usize = XY.iter().map(|(_, y)| y).sum();
 
-    for (x, y) in XY {
-        X += x;
-        Y += y;
-    }
-
-    match X.cmp(&Y) {
+    match x.cmp(&y) {
         std::cmp::Ordering::Greater => println!("Takahashi"),
-        std::cmp::Ordering::Less => println!("Aoki"),
         std::cmp::Ordering::Equal => println!("Draw"),
+        std::cmp::Ordering::Less => println!("Aoki"),
     }
 }
