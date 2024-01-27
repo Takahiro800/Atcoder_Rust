@@ -1,17 +1,11 @@
 #![allow(non_snake_case)]
-use proconio::{input, marker::Chars};
+use proconio::{input, marker::Bytes};
 
 fn main() {
     input! {
-        S: Chars
+        S: Bytes
     };
 
-    for (i, s) in S.iter().enumerate() {
-        if i % 2 == 1 && s == &'1' {
-            println!("No");
-            return;
-        }
-    }
-
-    println!("Yes")
+    let ans = (0..16).filter(|i| *i % 2 == 1).all(|i| S[i] == b'0');
+    println!("{}", if ans { "Yes" } else { "No" });
 }
