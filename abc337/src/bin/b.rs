@@ -9,10 +9,6 @@ fn main() {
 
     S.dedup();
 
-    match &S[..] {
-        ['A'] | ['B'] | ['C'] => println!("Yes"),
-        ['A', 'B'] | ['B', 'C'] | ['A', 'C'] => println!("Yes"),
-        ['A', 'B', 'C'] => println!("Yes"),
-        _ => println!("No"),
-    }
+    let ans = S.len() <= 3 && S.windows(2).all(|w| w[0] < w[1]);
+    println!("{}", if ans { "Yes" } else { "No" });
 }
