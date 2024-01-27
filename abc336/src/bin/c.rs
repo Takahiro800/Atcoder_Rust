@@ -7,18 +7,15 @@ fn main() {
     input! {
         N: usize
     }
+    let mut n = N - 1;
+    let mut ans = 0;
+    let mut pow = 1;
 
-    println!("{}", good_number(N));
-}
-
-fn good_number(n: usize) -> usize {
-    let mut n = n - 1;
-    let mut result = 0;
-    let mut place = 1;
     while n > 0 {
-        result += (n % 5) * 2 * place;
+        ans += pow * (n % 5) * 2;
         n /= 5;
-        place *= 10;
+        pow *= 10;
     }
-    result
+
+    println!("{}", ans);
 }
