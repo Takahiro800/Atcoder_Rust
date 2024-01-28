@@ -6,12 +6,10 @@ fn main() {
         N: i32
     };
 
-    for i in 0..=N {
-        for j in 0..=N {
-            for k in 0..=N {
-                if i + j + k <= N {
-                    println!("{} {} {}", i, j, k)
-                }
+    for x in 0..=N {
+        for y in 0..=(N - x) {
+            for z in 0..=(N - x - y) {
+                println!("{} {} {}", x, y, z)
             }
         }
     }
