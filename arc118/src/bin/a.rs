@@ -1,8 +1,12 @@
 #![allow(non_snake_case)]
-// use itertools::*;
 use proconio::input;
-// use superslice::*;
 
 fn main() {
-    input!{};
+    input! {
+        t: usize,
+        N: usize
+    };
+
+    let ans = ((N * 100) + t - 1) / t + (N - 1);
+    println!("{}", ans);
 }
