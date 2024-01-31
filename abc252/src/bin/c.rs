@@ -1,40 +1,28 @@
 #![allow(non_snake_case)]
-use std::{
-    collections::{HashMap, HashSet},
-    usize,
-};
-
-// use itertools::*;
-use proconio::{input, marker::Chars};
-// use superslice::*;
+use proconio::{input, marker::Bytes};
+use std::{collections::HashSet, usize};
 
 fn main() {
     input! {
         N: usize,
-        S: [Chars;N]
+        S: [Bytes;N]
     };
+    let mut ans = !0_usize;
 
-    let mut map: HashMap<usize, HashSet<_>> = HashMap::new();
+    for c in "0123456789".bytes() {
+        let a = S
+            .iter()
+            .map(|s| s.iter().position(|s| *s == c))
+            .collect::<Vec<_>>();
 
-    for i in 0..10 {
-        map.insert(i, HashSet::new());
-    }
+        let mut set = HashSet::new();
 
-    for s in S {
-        for (mut i, c) in s.iter().enumerate() {
-            let num = *c as usize - '0' as usize;
-            if let Some(set) = map.get_mut(&num) {
-                while !set.insert(i) {
-                    i += 10;
-                }
+        for mut a in a.into_iter().flatten() {
+            while !set.insert(a) {
+                a += 10;
             }
         }
+        ans = ans.min(*set.iter().max().unwrap());
     }
-
-    let ans = map
-        .values()
-        .map(|set| set.iter().max().unwrap())
-        .min()
-        .unwrap();
     println!("{}", ans);
 }
