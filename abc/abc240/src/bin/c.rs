@@ -1,7 +1,7 @@
 #![allow(non_snake_case)]
-// use itertools::*;
+use std::collections::HashSet;
+
 use proconio::input;
-// use superslice::*;
 
 fn main() {
     input! {
@@ -10,31 +10,19 @@ fn main() {
         AB: [(usize,usize); N]
     };
 
-    let mut dp = vec![vec![false; X + 1]; N];
+    let mut set = HashSet::new();
+    set.insert(0);
 
-    for (i, &(a, b)) in AB.iter().enumerate() {
-        if i == 0 {
-            if a <= X {
-                dp[i][a] = true
-            };
-            if b <= X {
-                dp[i][b] = true
-            };
-        } else {
-            let prev = &dp[i - 1].clone();
-            let line = &mut dp[i];
+    for (a, b) in AB {
+        let mut next = HashSet::new();
 
-            for j in 0..X {
-                if prev[j] {
-                    if j + a <= X {
-                        line[j + a] = true;
-                    }
-                    if j + b <= X {
-                        line[j + b] = true;
-                    }
-                }
-            }
+        for x in &set {
+            next.insert(x + a);
+            next.insert(x + b);
         }
+
+        set = next;
     }
-    println!("{}", if dp[N - 1][X] { "Yes" } else { "No" });
+
+    println!("{}", if set.contains(&X) { "Yes" } else { "No" });
 }
