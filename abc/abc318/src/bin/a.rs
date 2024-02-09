@@ -1,8 +1,13 @@
 #![allow(non_snake_case)]
-use itertools::*;
 use proconio::input;
-use superslice::*;
 
 fn main() {
-    input!{};
+    input! {
+        N: usize,
+        M: usize,
+        P: usize
+    };
+
+    let ans = (0..N).filter(|i| i % P == M - 1).count();
+    println!("{}", ans);
 }
