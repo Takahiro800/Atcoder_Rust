@@ -1,6 +1,6 @@
 #![allow(non_snake_case)]
 use proconio::{input, marker::Usize1};
-use std::collections::BinaryHeap;
+use std::{cmp::Reverse, collections::BinaryHeap};
 
 fn main() {
     input! {
@@ -20,11 +20,9 @@ fn main() {
     dp[0] = 0;
     let mut heap = BinaryHeap::new();
 
-    heap.push((0, 0));
+    heap.push(Reverse((0, 0)));
 
-    while let Some((d, p)) = heap.pop() {
-        let d = -d;
-
+    while let Some(Reverse((d, p))) = heap.pop() {
         if d > dp[p] {
             continue;
         }
@@ -32,7 +30,7 @@ fn main() {
         for (i, dis) in &g[p] {
             if d + dis < dp[*i] {
                 dp[*i] = d + dis;
-                heap.push((-dp[*i], *i));
+                heap.push(Reverse((dp[*i], *i)));
             }
         }
     }
