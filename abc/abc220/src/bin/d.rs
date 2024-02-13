@@ -1,6 +1,4 @@
 #![allow(non_snake_case)]
-use std::vec;
-
 use proconio::input;
 
 fn main() {
@@ -10,26 +8,21 @@ fn main() {
     };
 
     const MOD: usize = 998_244_353;
-    let mut dp = vec![vec![0; N]; 10];
+    let mut dp = [0; 10];
+    dp[A[0]] += 1;
 
-    for (i, &a) in A.iter().enumerate() {
-        if i == 0 {
-            dp[a][i] = 1;
-        } else {
-            for j in 0..10 {
-                let k = (j + a) % 10;
-                dp[k][i] += dp[j][i - 1];
-
-                let k = (j * a) % 10;
-                dp[k][i] += dp[j][i - 1];
-            }
-            for j in 0..10 {
-                dp[j][i] %= MOD;
-            }
+    for &a in A[1..].iter() {
+        let mut next = [0; 10];
+        for (i, p) in dp.iter().enumerate() {
+            next[(i + a) % 10] += p;
+            next[i * a % 10] += p;
         }
+
+        dp = next;
+        dp.iter_mut().for_each(|p| *p %= MOD)
     }
 
-    for line in dp {
-        println!("{}", line[N - 1]);
+    for ans in dp.iter() {
+        println!("{}", ans);
     }
 }
