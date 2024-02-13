@@ -18,7 +18,7 @@ fn main() {
     x.sort();
     x.dedup();
 
-    let mp: HashMap<_, _> = x.iter().enumerate().map(|(i, s)| (s, i)).collect();
+    let mp: HashMap<_, _> = x.iter().enumerate().map(|(i, &s)| (s, i)).collect();
     let mut uf = DSU::new(x.len());
 
     let mut ans = true;
