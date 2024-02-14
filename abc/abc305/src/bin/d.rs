@@ -1,6 +1,5 @@
 #![allow(non_snake_case)]
 use proconio::input;
-use std::collections::VecDeque;
 use superslice::Ext;
 
 fn main() {
@@ -24,15 +23,13 @@ fn main() {
             },
         )
         .collect();
-    let mut sleep_sum: VecDeque<_> = sleep
-        .iter()
+    let sleep_sum: Vec<_> = std::iter::once(&0)
+        .chain(sleep.iter())
         .scan(0, |sum, &x| {
             *sum += x;
             Some(*sum)
         })
         .collect();
-
-    sleep_sum.push_front(0);
 
     for (l, r) in LR {
         let s = A.lower_bound(&l);
