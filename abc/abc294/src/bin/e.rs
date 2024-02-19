@@ -14,22 +14,20 @@ fn main() {
     let mut i = 0;
     let mut j = 0;
 
-    while i < N && j < M {
-        let a = &mut P[i];
-        let b = &mut Q[j];
-        let len = a.1.min(b.1);
+    while let (Some(p), Some(q)) = (P.get_mut(i), Q.get_mut(j)) {
+        let len = p.1.min(q.1);
 
-        if a.0 == b.0 {
+        if p.0 == q.0 {
             ans += len;
         }
 
-        a.1 -= len;
-        b.1 -= len;
-        if a.1 == 0 {
-            i += 1;
+        p.1 -= len;
+        q.1 -= len;
+        if p.1 == 0 {
+            i += 1
         }
-        if b.1 == 0 {
-            j += 1;
+        if q.1 == 0 {
+            j += 1
         }
     }
 
