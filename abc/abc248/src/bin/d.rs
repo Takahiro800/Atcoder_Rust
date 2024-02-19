@@ -1,6 +1,4 @@
 #![allow(non_snake_case)]
-use std::collections::HashMap;
-
 use proconio::{input, marker::Usize1};
 use superslice::Ext;
 
@@ -9,30 +7,18 @@ fn main() {
         N: usize,
         A: [usize;N],
         Q: usize,
+        Query: [(Usize1, Usize1, usize);Q]
     };
 
-    let mut map = HashMap::new();
-    for (i, a) in A.iter().enumerate() {
-        map.entry(a).or_insert_with(Vec::new).push(i);
-    }
+    let mut a = A
+        .iter()
+        .enumerate()
+        .map(|(i, a)| (a, i))
+        .collect::<Vec<_>>();
+    a.sort();
 
-    for v in map.values_mut() {
-        v.sort();
-    }
-
-    for _ in 0..Q {
-        input! {
-            L: Usize1,
-            R: Usize1,
-            X: usize,
-        }
-
-        if let Some(v) = map.get(&X) {
-            let min = v.lower_bound(&L);
-            let max = v.upper_bound(&R);
-            println!("{}", max - min);
-        } else {
-            println!("{}", 0);
-        }
+    for (l, r, x) in Query {
+        let ans = a.upper_bound(&(&x, r)) - a.lower_bound(&(&x, l));
+        println!("{}", ans);
     }
 }
