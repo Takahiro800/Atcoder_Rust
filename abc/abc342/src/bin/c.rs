@@ -1,28 +1,32 @@
 #![allow(non_snake_case)]
+use std::collections::HashMap;
+
+use itertools::Itertools;
 use proconio::{input, marker::Chars};
 
 fn main() {
     input! {
-        N: usize,
+        _N: usize,
         mut S: Chars,
         Q: usize,
-        CD: [(char, char); Q]
+        CD: [(Chars, Chars); Q]
     };
+    let mut map = HashMap::new();
 
-    let mut replace_to = (b'a'..=b'z').map(|c| c as char).collect::<Vec<_>>();
+    for a in 'a'..='z' {
+        map.insert(a, a);
+    }
 
-    for (c, d) in CD {
-        for i in replace_to.iter_mut() {
-            if *i == c {
-                *i = d;
+    for (s, t) in CD {
+        let (s, t) = (s[0], t[0]);
+
+        for v in map.values_mut() {
+            if *v == s {
+                *v = t;
             }
         }
     }
 
-    for i in 0..N {
-        S[i] = replace_to[(S[i] as u8 - b'a') as usize];
-    }
-
-    let ans: String = S.into_iter().collect();
+    let ans = S.iter().map(|c| map[c]).join("");
     println!("{}", ans);
 }
