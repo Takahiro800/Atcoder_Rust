@@ -6,22 +6,8 @@ fn main() {
         mut S: Bytes
     };
 
-    let f = S[0];
+    let x = S.windows(2).position(|s| s[0] != s[1]).unwrap();
+    let ans = if x == 0 && S[1] == S[2] { 0 } else { x + 1 } + 1;
 
-    for (i, s) in S.iter().enumerate() {
-        if s != &f {
-            if i >= 2 {
-                println!("{}", i + 1);
-                return;
-            } else {
-                if f == S[2] {
-                    println!("2");
-                    return;
-                } else {
-                    println!("1");
-                    return;
-                }
-            }
-        }
-    }
+    println!("{}", ans);
 }
