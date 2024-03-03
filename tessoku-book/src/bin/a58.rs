@@ -61,9 +61,10 @@ where
     pub fn update(&mut self, k: usize, value: T) {
         let mut k = k + self.n - 1;
         self.seg[k] = value;
+
         while k > 0 {
             k = (k - 1) >> 1;
-            self.seg[k] = (self.op)(&self.seg[k * 2 + 1], &self.seg[k * 2 + 2])
+            self.seg[k] = (self.op)(&self.seg[k * 2 + 1], &self.seg[k * 2 + 2]);
         }
     }
 
