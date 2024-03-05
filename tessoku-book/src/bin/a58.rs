@@ -35,6 +35,8 @@ fn main() {
     }
 }
 
+// -------------------- begin segment tree -----------------------------
+// 0 オリジン
 pub struct SegmentTree<T, F> {
     n: usize,
     seg: Vec<T>,
@@ -59,18 +61,19 @@ where
     }
 
     pub fn update(&mut self, k: usize, value: T) {
-        let mut k = k + self.n - 1;
+        let mut k = k + self.n;
         self.seg[k] = value;
+        k >>= 1;
 
         while k > 0 {
-            k = (k - 1) >> 1;
-            self.seg[k] = (self.op)(&self.seg[k * 2 + 1], &self.seg[k * 2 + 2]);
+            self.seg[k] = (self.op)(&self.seg[k * 2], &self.seg[k * 2 + 1]);
+            k >>= 1;
         }
     }
 
     pub fn query(&self, left: usize, right: usize) -> T {
         assert!(left < right);
-        self.query_range(left, right, 0, 0, self.n)
+        self.query_range(left, right, 1, 0, self.n)
     }
 
     fn query_range(
@@ -82,14 +85,16 @@ where
         right_bound: usize,
     ) -> T {
         if right_bound <= left || right <= left_bound {
-            self.init_value
-        } else if left <= left_bound && right_bound <= right {
-            self.seg[k]
-        } else {
-            let mid = (left_bound + right_bound) >> 1;
-            let x = self.query_range(left, right, 2 * k + 1, left_bound, mid);
-            let y = self.query_range(left, right, 2 * k + 2, mid, right_bound);
-            (self.op)(&x, &y)
+            return self.init_value;
         }
+        if left <= left_bound && right_bound <= right {
+            return self.seg[k];
+        }
+
+        let mid = (left_bound + right_bound) >> 1;
+        let x = self.query_range(left, right, k << 1, left_bound, mid);
+        let y = self.query_range(left, right, (k << 1) + 1, mid, right_bound);
+        (self.op)(&x, &y)
     }
 }
+// -------------------- end segment tree -----------------------------
