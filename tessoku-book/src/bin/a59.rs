@@ -1,7 +1,5 @@
 #![allow(non_snake_case)]
-use std::fmt::Debug;
-
-use proconio::input;
+use proconio::{input, marker::Usize1};
 
 fn main() {
     input! {
@@ -18,15 +16,15 @@ fn main() {
         match q {
             1 => {
                 input! {
-                    p: usize,
+                    p: Usize1,
                     x: usize,
                 }
                 seg.update(p, x);
             }
             2 => {
                 input! {
-                    l: usize,
-                    r: usize
+                    l: Usize1,
+                    r: Usize1
                 }
                 println!("{}", seg.query(l, r))
             }
@@ -45,16 +43,12 @@ pub struct SegmentTree<T, F> {
 
 impl<T, F> SegmentTree<T, F>
 where
-    T: Copy + Debug,
+    T: Copy,
     F: Fn(&T, &T) -> T,
 {
     pub fn new(n: usize, init_value: T, op: F) -> Self {
         assert!(n > 0);
-        // let m = n.next_power_of_two();
-        let mut m = 1;
-        while m <= n {
-            m <<= 1;
-        }
+        let m = n.next_power_of_two();
         SegmentTree {
             seg: vec![init_value; 2 * m],
             n: m,
@@ -64,18 +58,19 @@ where
     }
 
     pub fn update(&mut self, k: usize, value: T) {
-        let mut k = k + self.n - 1;
+        let mut k = k + self.n;
         self.seg[k] = value;
+        k >>= 1;
 
         while k > 0 {
-            k = (k - 1) >> 1;
-            self.seg[k] = (self.op)(&self.seg[k * 2 + 1], &self.seg[k * 2 + 2]);
+            self.seg[k] = (self.op)(&self.seg[k * 2], &self.seg[k * 2 + 1]);
+            k >>= 1;
         }
     }
 
     pub fn query(&self, left: usize, right: usize) -> T {
         assert!(left < right);
-        self.query_range(left, right, 0, 0, self.n)
+        self.query_range(left, right, 1, 0, self.n)
     }
 
     fn query_range(
@@ -94,8 +89,8 @@ where
         }
 
         let mid = (left_bound + right_bound) >> 1;
-        let x = self.query_range(left, right, (k << 1) + 1, left_bound, mid);
-        let y = self.query_range(left, right, (k << 1) + 2, mid, right_bound);
+        let x = self.query_range(left, right, k << 1, left_bound, mid);
+        let y = self.query_range(left, right, (k << 1) + 1, mid, right_bound);
         (self.op)(&x, &y)
     }
 }
