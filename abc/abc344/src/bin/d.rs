@@ -18,31 +18,32 @@ fn main() {
         S.push(s);
     }
 
-    let mut dp = vec![std::usize::MAX; T.len()];
-    // let mut dp = vec![0; T.len()];
+    // dp[0] = 0としたい
+    let dp = vec![std::usize::MAX; T.len() + 1];
+    let mut prev = dp;
     for s in S.iter() {
+        let mut cur = prev.clone();
+
         for s in s.iter() {
-            for i in 0..dp.len() {
+            for i in 0..prev.len() {
                 let l = i + s.len();
-                if l < T.len() {
+
+                if l <= T.len() {
                     if &T[i..l] == s.as_str() {
-                        let a = dp[i];
-                        // dp[l] = dp[l].min(a.wrapping_add(1))
-                        if dp[l] == std::usize::MAX {
-                            dp[l] = 1;
-                        } else if a == std::usize::MAX {
-                            dp[l] = 1;
-                        } else {
-                            dp[l] = dp[l].min(a + 1);
+                        let a = prev[i];
+                        if i == 0 {
+                            cur[l] = prev[l].min(1);
+                        } else if a < std::usize::MAX {
+                            cur[l] = prev[l].min(a + 1);
                         }
                     }
                 }
             }
         }
+        prev = cur;
     }
 
-    // let ans = dp.iter().min().unwrap();
-    let ans = dp.last().unwrap();
+    let ans = prev.last().unwrap();
     println!(
         "{}",
         if *ans == std::usize::MAX {
