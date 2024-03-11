@@ -19,7 +19,9 @@ fn main() {
     }
 
     // dp[0] = 0としたい
-    let dp = vec![std::usize::MAX; T.len() + 1];
+    let mut dp = vec![std::usize::MAX; T.len() + 1];
+    dp[0] = 0;
+
     let mut prev = dp;
     for s in S.iter() {
         let mut cur = prev.clone();
@@ -28,14 +30,13 @@ fn main() {
             for i in 0..prev.len() {
                 let l = i + s.len();
 
-                if l <= T.len() {
-                    if &T[i..l] == s.as_str() {
-                        let a = prev[i];
-                        if i == 0 {
-                            cur[l] = prev[l].min(1);
-                        } else if a < std::usize::MAX {
-                            cur[l] = prev[l].min(a + 1);
-                        }
+                if l <= T.len() && &T[i..l] == s.as_str() {
+                    let a = prev[i];
+
+                    if i == 0 {
+                        cur[l] = prev[l].min(1);
+                    } else if a < std::usize::MAX {
+                        cur[l] = prev[l].min(a + 1);
                     }
                 }
             }
