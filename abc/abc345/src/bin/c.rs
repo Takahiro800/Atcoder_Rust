@@ -10,20 +10,15 @@ fn main() {
     let len = S.len();
     let map = run_length_encoding(S);
 
-    if map.len() == 1 {
-        println!("{}", 1);
-        return;
-    }
-
     let mut count = 0;
     for (_, c) in map.iter() {
         if *c >= 2 {
-            count += (c * (c - 1)) / 2;
+            count += c * (c - 1) / 2;
         }
     }
 
     count = count.saturating_sub(1);
-    let ans = (len * (len - 1) / 2) - count;
+    let ans = len * (len - 1) / 2 - count;
     println!("{}", ans);
 }
 
