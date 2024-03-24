@@ -26,16 +26,20 @@ fn main() {
                 B[0] = 0;
             }
         } else {
-            if *s == b'0' {
-                A[0] = prev_B[0];
-                A[1] = prev_A[0].min(prev_B[1]);
-                B[0] = prev_A[0].saturating_add(C[i]);
-                B[1] = (prev_A[1].saturating_add(C[i])).min(prev_B[0].saturating_add(C[i]));
-            } else {
-                A[0] = prev_B[0].saturating_add(C[i]);
-                A[1] = (prev_B[1].saturating_add(C[i])).min(prev_A[0].saturating_add(C[i]));
-                B[0] = prev_A[0];
-                B[1] = prev_B[0].min(prev_A[1]);
+            match s {
+                b'0' => {
+                    A[0] = prev_B[0];
+                    A[1] = prev_A[0].min(prev_B[1]);
+                    B[0] = prev_A[0].saturating_add(C[i]);
+                    B[1] = (prev_A[1].saturating_add(C[i])).min(prev_B[0].saturating_add(C[i]));
+                }
+                b'1' => {
+                    A[0] = prev_B[0].saturating_add(C[i]);
+                    A[1] = (prev_B[1].saturating_add(C[i])).min(prev_A[0].saturating_add(C[i]));
+                    B[0] = prev_A[0];
+                    B[1] = prev_B[0].min(prev_A[1]);
+                }
+                _ => unreachable!(),
             }
         }
 
