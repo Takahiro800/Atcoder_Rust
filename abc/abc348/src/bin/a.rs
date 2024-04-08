@@ -7,13 +7,5 @@ fn main() {
         N: usize
     };
 
-    let mut ans = vec![];
-    for i in 1..=N {
-        if i % 3 == 0 {
-            ans.push('x')
-        } else {
-            ans.push('o')
-        }
-    }
-    println!("{}", ans.iter().join(""));
+    println!("{}", "oox".chars().cycle().take(N).join(""));
 }

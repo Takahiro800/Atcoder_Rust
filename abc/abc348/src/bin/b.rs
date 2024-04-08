@@ -7,36 +7,16 @@ fn main() {
         XY: [(isize, isize);N]
     };
 
-    let mut v = vec![(0, 0); N];
-
     for i in 0..N {
-        let p = XY[i];
-        for j in i + 1..N {
-            let q = XY[j];
-            let d = distance(p, q);
-
-            if v[i].1 == d {
-                v[i] = (v[i].0.min(j + 1), d);
-            } else if v[i].1 < d {
-                v[i] = (j + 1, d);
-            }
-
-            if v[j].1 == d {
-                v[j] = (v[j].0.min(i + 1), d);
-            } else if v[j].1 < d {
-                v[j] = (i + 1, d);
-            }
-        }
+        let j = (0..N)
+            .max_by_key(|&j| {
+                let a = XY[i];
+                let b = XY[j];
+                let dx = a.0 - b.0;
+                let dy = a.1 - b.1;
+                (dx * dx + dy * dy, !j)
+            })
+            .unwrap();
+        println!("{}", j + 1);
     }
-
-    for (i, _) in v.iter() {
-        println!("{}", i);
-    }
-}
-
-fn distance(p: (isize, isize), q: (isize, isize)) -> isize {
-    let diff_a = if p.0 >= q.0 { p.0 - q.0 } else { q.0 - p.0 };
-    let diff_b = if p.1 >= q.1 { p.1 - q.1 } else { q.1 - p.1 };
-
-    diff_a.pow(2) + diff_b.pow(2)
 }
