@@ -1,19 +1,12 @@
 #![allow(non_snake_case)]
-use proconio::{input, marker::Chars};
+use proconio::input;
 
 fn main() {
     input! {
         _N: usize,
-        S: Chars
+        S: String
     };
 
-    let mut ans = -1;
-    for (i, w) in S.windows(3).enumerate() {
-        if w == ['A', 'B', 'C'] {
-            ans = i as isize + 1;
-            break;
-        }
-    }
-
+    let ans = S.find("ABC").map_or(-1, |i| i as isize + 1);
     println!("{}", ans);
 }
