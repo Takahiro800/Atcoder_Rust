@@ -7,7 +7,6 @@ fn main() {
         A: [isize; N-1]
     };
 
-    let sum = A.iter().sum::<isize>();
-    let ans = -sum;
+    let ans = -A.iter().sum::<isize>();
     println!("{}", ans);
 }

@@ -8,6 +8,7 @@ edition = "2021"
 proconio = "*"
 superslice = "*"
 itertools = "*"
+regex = "*"
 
 [profile.release]
 lto = true
