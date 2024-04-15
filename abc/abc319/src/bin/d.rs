@@ -2,5 +2,9 @@
 use proconio::input;
 
 fn main() {
-    input!{};
+    input! {
+        N: usize,
+        M: usize,
+        L: [usize; N],
+    };
 }
