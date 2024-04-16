@@ -1,0 +1,15 @@
+[package]
+name = "abc314"
+version = "0.1.0"
+edition = "2021"
+
+# dependencies added to new project
+[dependencies]
+proconio = "*"
+superslice = "*"
+itertools = "*"
+petgraph = "*"
+
+[profile.release]
+lto = true
+panic = 'abort'
