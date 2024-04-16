@@ -8,6 +8,7 @@ edition = "2021"
 proconio = "*"
 superslice = "*"
 itertools = "*"
+petgraph = "*"
 
 [profile.release]
 lto = true
