@@ -12,12 +12,8 @@ fn main() {
 
     for &(x, y) in XY.iter() {
         match x {
-            0 => {
-                a = a.max(a.max(b) + y);
-            }
-            1 => {
-                b = b.max(a + y);
-            }
+            0 => a = a.max(a.max(b) + y),
+            1 => b = b.max(a + y),
             _ => unreachable!(),
         }
     }
