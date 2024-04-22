@@ -9,6 +9,7 @@ proconio = "*"
 superslice = "*"
 itertools = "*"
 petgraph = "*"
+num-integer = "*"
 
 [profile.release]
 lto = true
