@@ -1,5 +1,4 @@
 #![allow(non_snake_case)]
-use num_integer::Integer;
 use proconio::input;
 
 fn main() {
@@ -9,7 +8,15 @@ fn main() {
         C: usize,
     };
 
-    let gcd = A.gcd(&B.gcd(&C));
+    let gcd = gcd(A, gcd(B, C));
     let ans = (A + B + C) / gcd - 3;
     println!("{}", ans);
+}
+
+fn gcd(a: usize, b: usize) -> usize {
+    if b == 0 {
+        a
+    } else {
+        gcd(b, a % b)
+    }
 }
