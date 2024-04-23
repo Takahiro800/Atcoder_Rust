@@ -26,8 +26,7 @@ fn main() {
         }
     }
 
-    if ans[0].len() < ans[1].len() {
-        ans.swap(0, 1);
-    }
+    ans.sort_by_key(|a| a.len());
+    ans.reverse();
     println!("{}", ans[0].iter().take(N / 2).join(" "));
 }
