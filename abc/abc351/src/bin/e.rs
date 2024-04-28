@@ -1,28 +1,47 @@
 #![allow(non_snake_case)]
-use itertools::Itertools;
 use proconio::input;
 
 fn main() {
     input! {
-        N: usize,
-        XY: [(usize,usize);N]
+        N: isize,
+        XY: [(isize,isize);N]
     };
+
+    let mut evens = vec![];
+    let mut odds = vec![];
+
+    for &(x, y) in XY.iter() {
+        let p = x + y;
+        let q = x - y;
+
+        if p % 2 == 0 {
+            evens.push((p, q));
+        } else {
+            odds.push((p, q))
+        }
+    }
+
+    let mut evens_x = evens.iter().map(|&(x, _)| x).collect::<Vec<_>>();
+    evens_x.sort();
+    let mut evens_y = evens.iter().map(|&(_, y)| y).collect::<Vec<_>>();
+    evens_y.sort();
+    let mut odds_x = odds.iter().map(|&(x, _)| x).collect::<Vec<_>>();
+    odds_x.sort();
+    let mut odds_y = odds.iter().map(|&(_, y)| y).collect::<Vec<_>>();
+    odds_y.sort();
+
+    let p = vec![evens_x, evens_y, odds_x, odds_y];
 
     let mut ans = 0;
 
-    for c in (0..N).combinations(2) {
-        let p = XY[c[0]];
-        let q = XY[c[1]];
-
-        let x_diff = p.0.abs_diff(q.0);
-        let y_diff = p.1.abs_diff(q.1);
-
-        if x_diff % 2 != y_diff % 2 {
-            continue;
+    for set in p.iter() {
+        if set.len() > 1 {
+            for (i, &v) in set.iter().enumerate() {
+                ans += (2 * (i + 1) as isize - set.len() as isize - 1) * v;
+            }
         }
-
-        ans += x_diff.max(y_diff);
     }
 
+    ans /= 2;
     println!("{}", ans);
 }
