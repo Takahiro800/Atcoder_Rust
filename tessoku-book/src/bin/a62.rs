@@ -1,38 +1,37 @@
 #![allow(non_snake_case)]
-use proconio::input;
+use proconio::{input, marker::Usize1};
 
 fn main() {
     input! {
         N: usize,
         M: usize,
-        AB: [(usize, usize);M]
+        AB: [(Usize1, Usize1); M],
     }
-    let mut glaph: Vec<Vec<usize>> = vec![vec![]; N + 1];
-    let mut visited: Vec<_> = vec![false; N + 1];
-    visited[0] = true;
+    let mut graph = vec![vec![]; N];
+    let mut visited = vec![false; N];
 
-    for (a, b) in &AB {
-        glaph[*a].push(*b);
-        glaph[*b].push(*a);
+    for &(a, b) in AB.iter() {
+        graph[a].push(b);
+        graph[b].push(a);
     }
 
-    dfs(&glaph, &mut visited, 1);
+    dfs(&graph, &mut visited, 0);
 
-    let ans: &str = if visited.iter().all(|&b| b) {
+    let ans = if visited.iter().all(|&a| a) {
         "The graph is connected."
     } else {
         "The graph is not connected."
     };
 
-    println!("{}", ans)
+    println!("{}", ans);
 }
 
-fn dfs(glaph: &Vec<Vec<usize>>, visited: &mut Vec<bool>, pos: usize) {
+fn dfs(graph: &Vec<Vec<usize>>, visited: &mut Vec<bool>, pos: usize) {
     visited[pos] = true;
 
-    for &node in &glaph[pos] {
+    for &node in &graph[pos] {
         if !visited[node] {
-            dfs(glaph, visited, node)
+            dfs(graph, visited, node);
         }
     }
 }
