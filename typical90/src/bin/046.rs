@@ -1,47 +1,27 @@
 #![allow(non_snake_case)]
+use itertools::{iproduct, Itertools};
 use proconio::input;
 
 fn main() {
     input! {
         N: usize,
-        mut A: [usize; N],
-        mut B: [usize; N],
-        mut C: [usize; N],
+        mut A: [[usize; N]; 3],
     };
-    let cons = 46;
-    let mut ans = 0;
+    const M: usize = 46;
 
-    let A = process_vector(&mut A, cons);
-    let B = process_vector(&mut B, cons);
-    let C = process_vector(&mut C, cons);
+    let a: Vec<Vec<usize>> = A
+        .iter()
+        .map(|a| {
+            let mut b = [0; M];
+            a.iter().for_each(|&x| b[x % M] += 1);
+            b.to_vec()
+        })
+        .collect_vec();
 
-    for (a, count_a) in A.iter() {
-        for (b, count_b) in B.iter() {
-            for (c, count_c) in C.iter() {
-                if (a + b + c) % cons == 0 {
-                    ans += count_a * count_b * count_c;
-                }
-            }
-        }
-    }
+    let ans = iproduct!(0..M, 0..M, 0..M)
+        .filter(|&(i, j, k)| (i + j + k) % M == 0)
+        .map(|(i, j, k)| a[0][i] * a[1][j] * a[2][k])
+        .sum::<usize>();
 
     println!("{}", ans);
-}
-
-fn process_vector(vec: &mut Vec<usize>, cons: usize) -> Vec<(usize, usize)> {
-    vec.iter_mut().for_each(|x| *x %= cons);
-    vec.sort();
-    run_length_encoding(vec.to_vec())
-}
-
-fn run_length_encoding<T: Eq>(a: Vec<T>) -> Vec<(T, usize)> {
-    let mut a = a.into_iter().map(|a| (a, 1)).collect::<Vec<_>>();
-    a.dedup_by(|a, b| {
-        a.0 == b.0 && {
-            b.1 += a.1;
-            true
-        }
-    });
-
-    a
 }
