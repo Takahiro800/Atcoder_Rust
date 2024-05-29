@@ -3,26 +3,22 @@ use proconio::input;
 
 fn main() {
     input! {
-        N: u128,
-        L: u128,
+        N: usize,
+        L: usize,
     };
-    const MOD: u128 = 10_u128.pow(9) + 7;
+    const MOD: usize = 10_usize.pow(9) + 7;
 
-    let mut ans = 0;
+    let mut dp = vec![0; N + 1];
+    dp[0] = 1;
 
-    for i in 0..=N / L {
-        let n = N - (L * i) + i;
-        ans += combination(n, i) % MOD;
+    for i in 1..=N {
+        let mut v = dp[i - 1];
+
+        if i >= L {
+            v += dp[i - L];
+        }
+        dp[i] = v % MOD;
     }
-
+    let ans = dp[N];
     println!("{}", ans);
-}
-
-fn combination(n: u128, r: u128) -> u128 {
-    let mut result = 1;
-
-    for i in 0..r {
-        result = result * (n - i) / (i + 1);
-    }
-    result
 }
